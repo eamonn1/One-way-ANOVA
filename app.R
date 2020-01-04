@@ -1,7 +1,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Rshiny ideas from on https://gallery.shinyapps.io/multi_regression/
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+    library(ggplot2)
     library(shiny) 
     library(nlme)
     library(VCA)
@@ -47,13 +47,27 @@ ui <- fluidPage(theme = shinytheme("journal"),
            #   actionButton("write", "Change"),  #new
             #),
             
-            actionButton("resample", "Simulate a new sample"),
-            br(),br(),
+            # actionButton("resample", "Simulate a new sample"),
+            # br(),br(),
+            # 
+            # actionButton(inputId='ab1', label="R code here", 
+            #              icon = icon("th"), 
+            #              onclick ="window.open('https://raw.githubusercontent.com/eamonn2014/One-way-ANOVA/master/app.R', '_blank')"),
             
-            actionButton(inputId='ab1', label="R code here", 
-                         icon = icon("th"), 
-                         onclick ="window.open('https://raw.githubusercontent.com/eamonn2014/One-way-ANOVA/master/app.R', '_blank')"),
-            
+          br(),
+          actionButton(inputId='ab1', label="R code",   icon = icon("th"), 
+                       onclick ="window.open('https://raw.githubusercontent.com/eamonn2014/One-way-ANOVA/master/app.R', '_blank')"),   
+          actionButton("resample", "Simulate a new sample"),
+          br(), br(),
+          
+          
+          
+          
+          
+          
+          
+          
+          
             div(strong("Select true population parameters"),p(" ")),
 
             
@@ -573,7 +587,7 @@ server <- shinyServer(function(input, output) {
         
         #base plot~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         #https://rstudio-pubs-static.s3.amazonaws.com/308410_2ece93ee71a847af9cd12fa750ed8e51.html
-        require(ggplot2)
+       
           ggplot(df, aes(reorder(IV,DV),DV,fill=IV))+
             # ggplot(tyre, aes(Brands,Mileage,fill=Brands))+ # if you want to leave them alphabetic
             geom_jitter(colour = "gray",width= 0.05) +
@@ -585,15 +599,16 @@ server <- shinyServer(function(input, output) {
                  subtitle ="Gray dots=sample data points, Blue dot=mean, Red=99% confidence interval",
                  caption = "") +
             guides(fill=FALSE) +
+            stat_summary(geom="point", fun.y=mean, color="blue") +
             stat_summary(fun.data = "mean_cl_normal", colour = "red", size = 1.5, 
                          fun.args = list(conf.int=.99)) +
-            stat_summary(geom="point", fun.y=mean, color="blue") +
+        
             theme_bw() 
         
         } else {
           
         #VCA plot~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-            require(VCA)
+           
             varPlot(DV~IV, df, 
                     BG=list(var="IV", 
                             col=c("#f7fcfd","#e5f5f9","#ccece6","#99d8c9",
