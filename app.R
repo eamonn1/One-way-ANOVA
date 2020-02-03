@@ -596,7 +596,7 @@ server <- shinyServer(function(input, output) {
             labs(title="Boxplot, dotplot and Standard error of mean for groups", 
                  x = "Groups (sorted)",
                  y = "Response",
-                 subtitle ="Blue dots=sample data points, Yellow dot=mean, Red=1 x standard errorl",
+                 subtitle ="Blue dots=sample data points, Yellow dot=mean, Red=1 x standard error",
                  caption = "") +
             guides(fill=FALSE) +
     #        stat_summary(geom="point", fun.y=mean, color="blue") +
