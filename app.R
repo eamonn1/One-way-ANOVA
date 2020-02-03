@@ -131,8 +131,8 @@ ui <- fluidPage(theme = shinytheme("journal"),
         
         div(plotOutput("reg.plot", width=fig.width, height=fig.height)),  
     
-        p(strong("Arithmetic mean is presented as the intercept above the plot when VCA package is used, otherwise the modelled mean is presented.
-                 (Artithmetic mean and modelled mean will match with a balanced design)")) ,
+        # p(strong("Arithmetic mean is presented as the intercept above the plot when VCA package is used, otherwise the modelled mean is presented.
+        #          (Artithmetic mean and modelled mean will match with a balanced design)")) ,
         
         div( verbatimTextOutput("reg.summary"))
         
