@@ -590,19 +590,25 @@ server <- shinyServer(function(input, output) {
        
           ggplot(df, aes(reorder(IV,DV),DV,fill=IV))+
             # ggplot(tyre, aes(Brands,Mileage,fill=Brands))+ # if you want to leave them alphabetic
-            geom_jitter(colour = "gray",width= 0.05) +
+   #         geom_jitter(colour = "gray",width= 0.05) +
             stat_boxplot(geom ='errorbar',width = 0.4) +
             geom_boxplot(outlier.shape = NA) + #avoid duplication of outliers
             labs(title="Boxplot, dotplot and Standard error of mean for groups", 
                  x = "Groups (sorted)",
                  y = "Response",
-                 subtitle ="Gray dots=sample data points, Blue dot=mean, Red=99% confidence interval",
+                 subtitle ="Blue dots=sample data points, Yellow dot=mean, Red=1 x standard errorl",
                  caption = "") +
             guides(fill=FALSE) +
-            stat_summary(geom="point", fun.y=mean, color="blue") +
-            stat_summary(fun.data = "mean_cl_normal", colour = "red", size = 1.5, 
-                         fun.args = list(conf.int=.99)) +
+    #        stat_summary(geom="point", fun.y=mean, color="blue") +
+      #      stat_summary(fun.data = "mean_cl_normal", colour = "red", size = 1.5, 
+      #                   fun.args = list(conf.int=.99)) +
         
+         #   theme_bw() 
+          
+          geom_jitter(shape=21, fill="blue", color="darkred", size=3, width= 0.1) +
+            
+            stat_summary(fun.data = mean_se, geom = "errorbar", colour = "red", size = 1, width= 0.1)+
+            stat_summary(geom="point", fun.y=base::mean, color="yellow",  size = 2) +
             theme_bw() 
         
         } else {
